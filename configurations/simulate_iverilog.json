@@ -1,0 +1,27 @@
+{
+    "project":"simulate_iverilog",
+    "installed tools": [
+        "xilinx",
+        "altera",
+        "icarus"
+    ],
+    "flow_steps": {
+    "1" : "clean_up",
+    "2" : "simulation",
+    "3" : "run"
+    },
+    "flow" : {
+    "clean_up" : {
+        "executable" : "rm",
+        "arguments" : "-f dump.vcd a.out"
+    },
+	"simulation" : {
+	    "executable": "iverilog",
+	    "arguments" : " -f rtl_sim.f"	
+	},
+	"run" : {
+	    "executable" : "./a.out",
+	    "arguments"  : " "
+	}
+    }
+}

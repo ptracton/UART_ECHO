@@ -1,0 +1,21 @@
+{
+    "project":"simulate_modelsim",
+    "installed tools": [
+        "xilinx",
+        "altera",
+        "icarus"
+    ],
+    "flow_steps": {
+	"1" : "simulation"
+    },
+    "flow" : {
+	"simulation" : {
+	    "executable": "vsim",
+        "arguments" : " -c -do modelsim_rtl_sim.f -l modelsim_logfile.txt"
+	},
+	"run" : {
+	    "executable" : "./a.out",
+	    "arguments"  : " "
+	}
+    }
+}

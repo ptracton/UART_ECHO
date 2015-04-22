@@ -1,0 +1,31 @@
+{
+    "project":"simulate_iverilog",
+    "installed tools": [
+        "xilinx",
+        "altera",
+        "icarus"
+    ],
+    "flow_steps": {
+        "1" : "clean_up",
+        "2" : "prepare",
+        "3" : "simulation"
+    },
+    "flow" : {
+        "clean_up" : {
+            "executable" : "rm",
+            "arguments" : "-f dump.vcd a.out"
+        },
+        "prepare" : {
+            "executable" : "touch",
+            "arguments" : "cds.lib"
+        },
+        "simulation" : {
+            "executable": "ncverilog",
+            "arguments" : " -v93 +access+rwc -clean -cdslib cds.lib -f rtl_sim.f -timescale 1ns/1ns"
+        },
+        "run" : {
+            "executable" : "./a.out",
+            "arguments"  : " "
+        }
+    }
+}

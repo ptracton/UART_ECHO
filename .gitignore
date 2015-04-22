@@ -55,3 +55,10 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Verilog
+a.out
+*.vcd
+cds.lib
+*.exe
+*wdb

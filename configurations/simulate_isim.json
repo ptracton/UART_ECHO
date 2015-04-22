@@ -1,0 +1,31 @@
+{
+    "project":"simulate_isim",
+    "installed tools": [
+        "xilinx",
+        "altera",
+        "icarus"
+    ],
+    "flow_steps": {
+	"1" : "clean",
+    "2" : "build",
+    "3" : "simulation"
+    },
+    "flow" : {
+	"clean" :{
+	    "executable" : "rm",
+	    "arguments" : "-f dump.vcd  fuse.log  fuse.xmsgs  fuseRelaunch.cmd  isim  isim.log  isim.wdb  simulation.exe "
+	},
+	"build" :{
+	    "executable" : "fuse",
+        "arguments" : "work.glbl work.testbench -L unisims_ver -L unimacro_ver -L xilinxcorelib_ver -prj isim_rtl_sim.f -o simulation.exe"
+	},
+	"simulation" : {
+	    "executable": "simulation.exe",
+	    "arguments" : "-tclbatch simulation.tcl"	
+	},
+	"run" : {
+	    "executable" : "./a.out",
+	    "arguments"  : " "
+	}
+    }
+}
