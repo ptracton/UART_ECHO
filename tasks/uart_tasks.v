@@ -62,10 +62,6 @@ module uart_tasks;
          @(posedge `UART_CLK);
          $display("TASK: UART Write = %c @ %d", char, $time);
          `UART_MASTER0.wb_wr1(32'hFFFF0000,    4'h0, {24'h000000, char});
-
-
-
-
       end
    endtask // uart_write_char
 
@@ -75,17 +71,20 @@ module uart_tasks;
    task uart_read_char;
       input [7:0] expected;
       begin
-         if (!testbench.uart0_int)
-           @(posedge testbench.uart0_int);
-
-         `UART_MASTER0.wb_rd1(32'hFFFF0000,    4'h0, testbench.read_word);
-         $display("TASK: UART Read = %c @ %d", testbench.read_word, $time);
-         if (testbench.read_word != expected)
-           begin
-              $display("\033[1;31mFAIL: UART Read = 0x%h NOT 0x%h @ %d\033[0m", testbench.read_word[7:0], expected, $time);
-              `test_failed <= 1;
-           end
-      end
+        $display("Reading 0x%x @ %d", expected, $time);
+      
+      if (!testbench.uart0_int)
+        @(posedge testbench.uart0_int);
+      
+      `UART_MASTER0.wb_rd1(32'hFFFF0000,    4'h0, testbench.read_word);
+      $display("TASK: UART Read = %c @ %d", testbench.read_word, $time);
+      if (testbench.read_word != expected)
+        begin
+           $display("\033[1;31mFAIL: UART Read = 0x%h NOT 0x%h @ %d\033[0m", testbench.read_word[7:0], expected, $time);
+           `test_failed <= 1;
+        end
+         @(posedge testbench.clk_tb);         
+      end      
    endtask // uart_read_char
 
 

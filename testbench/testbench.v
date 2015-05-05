@@ -73,8 +73,8 @@ module testbench (/*AUTOARG*/ ) ;
    always @(posedge test_failed)
      if (test_failed) begin
         $display("*** TEST FAILED ***");
-//        #1000;
-//      $finish;
+        #50;
+        $finish;
      end
 
    /****************************************************************************
@@ -166,6 +166,8 @@ module testbench (/*AUTOARG*/ ) ;
       `UART_READ_CHAR("A");
       `UART_READ_CHAR("B");
       `UART_READ_CHAR("C");
+      `UART_READ_CHAR("D");
+      `UART_READ_CHAR("E");
 
       repeat(100)@(posedge clk_tb);
       test_passed <= 1'b1;

@@ -59,6 +59,10 @@ if __name__ == "__main__":
     parser.add_argument("--isim",
                         help="Use Xilinx ISim",
                         action="store_true")
+    parser.add_argument("--xsim",
+                        help="Use Xilinx Vivado XSim",
+                        action="store_true")
+    
 
     args = parser.parse_args()
     if args.debug:
@@ -70,7 +74,7 @@ if __name__ == "__main__":
         json_file = "../../configurations/simulate_ncverilog.json"
     if args.modelsim:
         json_file = "../../configurations/simulate_modelsim.json"
-    if args.isim:
+    if args.isim or args.xsim:
         json_file = "../../configurations/simulate_isim.json"
 
     try:

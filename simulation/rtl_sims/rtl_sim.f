@@ -1,6 +1,6 @@
 +libext+.v+.V+.ver
 +incdir+../../tasks/
-+define+NCVERILOG
+
 ../../tasks/uart_tasks.v
 ../../testbench/testbench.v 
 ../../testbench/dump.v

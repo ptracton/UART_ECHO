@@ -49,7 +49,6 @@ module uart_fifo (/*AUTOARG*/
    //---------------------------------------------------------------------------
    /*AUTOREG*/
    reg          tx_fifo_pop;      // If there is byte to send and not sending pop a value from TX FIFO
-   reg          uart_transmit;    // Delay the transmit signal 1 clock so byte can move through FIFO
 
    //---------------------------------------------------------------------------
    //
@@ -114,7 +113,7 @@ module uart_fifo (/*AUTOARG*/
                   .clk                  (clk),
                   .rst                  (rst),
                   .rx                   (rx),
-                  .transmit             (uart_transmit),
+                  .transmit             (tx_fifo_pop),
                   .tx_byte              (tx_fifo_data_out));
 
 
@@ -160,27 +159,15 @@ module uart_fifo (/*AUTOARG*/
    //
    // POP from TX FIFO is it is NOT empty and we are NOT transmitting
    //
+   
    always @(posedge clk)
      if (rst) begin
         tx_fifo_pop <= 1'b0;
      end else begin
-        if (!tx_fifo_empty /* & !is_transmitting*/ )
-          tx_fifo_pop <= 1'b1;
-        else
-          tx_fifo_pop <= 1'b0;
+        tx_fifo_pop <= !is_transmitting & !tx_fifo_empty;
      end
 
 
-   //
-   // Delay the transmit signal to the UART by 1 clock
-   // to let data propagate through the FIFO
-   //
-   always @(posedge clk)
-     if (rst) begin
-        uart_transmit <= 1'b0;
-     end else begin
-        uart_transmit <= transmit;
-     end
 
 
 endmodule // uart_fifo
