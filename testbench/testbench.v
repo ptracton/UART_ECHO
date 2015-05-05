@@ -34,6 +34,25 @@ module testbench (/*AUTOARG*/ ) ;
      end
 
    //
+   // Free Running 100 MHz Clock
+   //
+   reg clk_100mhz;
+
+   parameter   _clk_100mhz_high = 5,
+     _clk_100mhz_low  = 5,
+     _clk_100mhz_period = _clk_100mhz_high + _clk_100mhz_low;
+
+   initial
+     begin
+        clk_100mhz <= 'b0;
+        forever
+          begin
+             #(_clk_100mhz_low)  clk_100mhz = 1;
+             #(_clk_100mhz_high) clk_100mhz = 0;
+          end
+     end
+   
+   //
    // Asynch. Reset to device
    //
    reg reset_tb;
@@ -47,7 +66,7 @@ module testbench (/*AUTOARG*/ ) ;
 
    uart_echo dut(
                 .TX(UART0_TX),
-                .CLK(clk_tb),
+                .CLK(clk_100mhz),
                 .RESET(reset_tb),
                 .RX(UART0_RX)
                 ) ;
